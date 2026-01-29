@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  bookich-db:
+    image: postgres:15-alpine
+    container_name: bookich_db
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=bookich_database
+      - POSTGRES_USER=bookich_user
+      - POSTGRES_PASSWORD=ilnur@089
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bookich_user -d bookich_database"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  auth-server:
+    build: ./BookichAuthServer
+    container_name: auth_server
+    ports:
+      - "9000:9000"
+    depends_on:
+      bookich-db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://bookich-db:5432/bookich_database?stringtype=unspecified
+      SPRING_DATASOURCE_USERNAME: bookich_user
+      SPRING_DATASOURCE_PASSWORD: ilnur@089
+
+      SERVER_PORT: 9000
+
+  bookich-app:
+    build: ./Bookich
+    container_name: bookich_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      bookich-db:
+        condition: service_healthy
+      auth-server:
+        condition: service_started
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://bookich-db:5432/bookich_database?stringtype=unspecified
+      SPRING_DATASOURCE_USERNAME: bookich_user
+      SPRING_DATASOURCE_PASSWORD: ilnur@089
+
+
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://localhost:9000
+
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://auth-server:9000/oauth2/jwks
+
+volumes:
+  postgres_data:
