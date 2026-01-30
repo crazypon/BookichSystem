@@ -1,6 +1,6 @@
 # 📚 Bookich - Distributed Library Management System
 
-![Java](https://img.shields.io/badge/Java-17-orange) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.0-green) ![Docker](https://img.shields.io/badge/Docker-Enabled-blue) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-lightgrey) ![Coverage](https://img.shields.io/badge/Coverage-87%25-brightgreen) 
+![Java](https://img.shields.io/badge/Java-17-orange) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.0-green) ![Docker](https://img.shields.io/badge/Docker-Enabled-blue) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-lightgrey) ![Coverage](https://img.shields.io/badge/Coverage-87%25-brightgreen) 
 
 **Bookich** is a secure, microservices-oriented web application that separates Authentication (OAuth2) from the Resource API. It allows users to browse books and borrow them, while ensuring secure access via JWT tokens.
 
@@ -49,8 +49,8 @@ sudo docker compose up --build
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://web.postman.co/workspace/My-Workspace~a26908e3-2a82-45ca-85d4-e5cbba04e292/collection/34895341-0a7f4072-8aaf-4ffd-bcca-a0836696b8d8?action=share&source=copy-link&creator=34895341)
 
-# Application Diagrams
-### 1. Request Diagram
+# Diagrams
+### 1. Application Diagram
 ![Architecture Diagram](./docs/request_diagram.png)
 
 ### 2. Security Diagram
